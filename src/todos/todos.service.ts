@@ -8,11 +8,11 @@ import { TodoModel } from './models/todo.model';
 export class TodosService {
   constructor(@InjectModel(TodoModel) private todoModel: typeof TodoModel) {}
 
-  async getAll() {
+  async getTodos() {
     return await this.todoModel.findAll();
   }
 
-  async getOne(id: string) {
+  async getOneTodo(id: string) {
     return await this.todoModel.findOne({
       where: {
         id,

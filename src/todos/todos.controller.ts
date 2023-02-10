@@ -20,12 +20,12 @@ export class TodosController {
 
   @Get()
   getTodos() {
-    return this.todosService.getAll();
+    return this.todosService.getTodos();
   }
 
   @Get(':id')
   getOneTodo(@Param('id') id: string) {
-    return this.todosService.getOne(id);
+    return this.todosService.getOneTodo(id);
   }
 
   @Post()
