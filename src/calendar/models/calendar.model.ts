@@ -6,19 +6,10 @@ export class Calendar extends Model {
   uid: number;
 
   @Column
-  year: number;
+  eventStart: Date;
 
   @Column
-  month: number;
-
-  @Column
-  day: number;
-
-  @Column
-  timeStart: string;
-
-  @Column
-  timeEnd: string;
+  eventEnd: Date;
 
   @Column
   title: string;

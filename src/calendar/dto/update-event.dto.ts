@@ -5,19 +5,10 @@ export class UpdateCalendarEventDto {
   readonly uid: number;
 
   @IsNotEmpty()
-  readonly year: number;
+  eventStart: Date;
 
   @IsNotEmpty()
-  readonly month: number;
-
-  @IsNotEmpty()
-  readonly day: number;
-
-  @IsNotEmpty()
-  readonly timeStart: string;
-
-  @IsNotEmpty()
-  readonly timeEnd: string;
+  eventEnd: Date;
 
   @IsNotEmpty()
   readonly title: string;
