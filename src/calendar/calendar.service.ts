@@ -2,13 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateCalendarEventDto } from './dto/create-event.dto';
 import { UpdateCalendarEventDto } from './dto/update-event.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { CalendarModel } from './models/calendar.model';
+import { Calendar } from './models/calendar.model';
 
 @Injectable()
 export class CalendarService {
-  constructor(
-    @InjectModel(CalendarModel) private eventModel: typeof CalendarModel,
-  ) {}
+  constructor(@InjectModel(Calendar) private eventModel: typeof Calendar) {}
 
   async getEvents() {
     return await this.eventModel.findAll();
@@ -23,7 +21,7 @@ export class CalendarService {
   }
 
   async createEvent(createEventDto: CreateCalendarEventDto) {
-    const event = new CalendarModel();
+    const event = new Calendar();
     Object.assign(event, createEventDto);
     return await event.save();
   }

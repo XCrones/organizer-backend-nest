@@ -1,7 +1,7 @@
 import { Model, Table, Column } from 'sequelize-typescript';
 
 @Table
-export class TodoModel extends Model {
+export class Todo extends Model {
   @Column
   uid: number;
 

@@ -1,7 +1,7 @@
 import { Model, Table, Column } from 'sequelize-typescript';
 
 @Table
-export class CalendarModel extends Model {
+export class Calendar extends Model {
   @Column
   uid: number;
 
