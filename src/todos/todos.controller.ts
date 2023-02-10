@@ -19,12 +19,12 @@ export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
   @Get()
-  getAll() {
+  getTodos() {
     return this.todosService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
+  getOneTodo(@Param('id') id: string) {
     return this.todosService.getOne(id);
   }
 
@@ -36,12 +36,12 @@ export class TodosController {
   }
 
   @Patch(':id')
-  updatePost(@Body() updateTodoDto: UpdateTodoDto, @Param('id') id: string) {
+  updateTodo(@Body() updateTodoDto: UpdateTodoDto, @Param('id') id: string) {
     return this.todosService.updateTodo(updateTodoDto, id);
   }
 
   @Delete(':id')
-  deletePost(@Param('id') id: string) {
+  deleteTodo(@Param('id') id: string) {
     return this.todosService.deleteTodo(id);
   }
 }
