@@ -23,12 +23,6 @@ export class TodosService {
   async createTodo(createTodoDto: CreateTodoDto) {
     const todo = new Todo();
     Object.assign(todo, createTodoDto);
-    // todo.title = createTodoDto.title;
-    // todo.category = createTodoDto.category;
-    // todo.priority = createTodoDto.priority;
-    // todo.deadline = createTodoDto.deadline;
-    // todo.status = createTodoDto.status;
-    // todo.descritption = createTodoDto.descritption;
     return await todo.save();
   }
 
