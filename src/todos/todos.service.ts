@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { Todo } from './models/todo.model';
+import { TodoModel } from './models/todo.model';
 
 @Injectable()
 export class TodosService {
-  constructor(@InjectModel(Todo) private todoModel: typeof Todo) {}
+  constructor(@InjectModel(TodoModel) private todoModel: typeof TodoModel) {}
 
   async getAll() {
     return await this.todoModel.findAll();
@@ -21,7 +21,7 @@ export class TodosService {
   }
 
   async createTodo(createTodoDto: CreateTodoDto) {
-    const todo = new Todo();
+    const todo = new TodoModel();
     Object.assign(todo, createTodoDto);
     return await todo.save();
   }
