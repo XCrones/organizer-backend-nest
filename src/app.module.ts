@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config/config';
 import { TodosModule } from './todos/todos.module';
+import { CalendarModule } from './calendar/calendar.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { TodosModule } from './todos/todos.module';
       load: [databaseConfig],
     }),
     TodosModule,
+    CalendarModule,
   ],
   controllers: [AppController],
   providers: [AppService],
