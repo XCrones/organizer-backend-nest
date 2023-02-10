@@ -11,6 +11,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 
