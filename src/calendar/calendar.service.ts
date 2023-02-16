@@ -33,7 +33,7 @@ export class CalendarService {
       },
     });
     await event.destroy();
-    return;
+    return event;
   }
 
   async updateEvent(updateEventDto: UpdateCalendarEventDto, id: string) {

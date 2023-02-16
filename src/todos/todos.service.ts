@@ -33,7 +33,7 @@ export class TodosService {
       },
     });
     await todo.destroy();
-    return;
+    return todo;
   }
 
   async updateTodo(updateTodoDto: UpdateTodoDto, id: string) {
