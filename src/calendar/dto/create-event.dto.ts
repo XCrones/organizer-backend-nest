@@ -17,8 +17,5 @@ export class CreateCalendarEventDto {
   readonly description: string;
 
   @IsNotEmpty()
-  readonly color: string;
-
-  @IsNotEmpty()
   readonly background: string;
 }

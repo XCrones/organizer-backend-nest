@@ -18,8 +18,5 @@ export class Calendar extends Model {
   description: string;
 
   @Column
-  color: string;
-
-  @Column
   background: string;
 }
