@@ -18,4 +18,7 @@ export class CreateTodoDto {
 
   @IsNotEmpty()
   readonly descritption: string;
+
+  @IsNotEmpty()
+  readonly background: string;
 }

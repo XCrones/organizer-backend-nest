@@ -22,4 +22,7 @@ export class Todo extends Model {
 
   @Column
   descritption: string;
+
+  @Column
+  readonly background: string;
 }
