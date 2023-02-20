@@ -4,13 +4,13 @@ import { Dialect } from 'sequelize';
 
 export const pgConfig = registerAs(EnumConfig.DATABASE, () => {
   return {
-    dialect: <Dialect>process.env.SQL_DIALECT,
+    dialect: <Dialect>process.env.DB_DIALECT,
     logging: process.env.SQL_LOGGING === 'true' ? true : false,
-    host: process.env.DATABASE_HOST,
-    port: +process.env.DATABASE_PORT,
-    username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
+    host: process.env.DB_HOST,
+    port: +process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
     autoLoadEntities: true,
     synchronize: true,
   };
