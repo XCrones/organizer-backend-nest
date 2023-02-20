@@ -17,7 +17,6 @@ export class CreateCalendarEventDto {
   @IsString()
   readonly title: string;
 
-  @IsNotEmpty()
   @IsString()
   readonly description: string;
 
