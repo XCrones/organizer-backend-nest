@@ -1,10 +1,4 @@
-import {
-  IsNotEmpty,
-  IsString,
-  IsNumber,
-  IsDate,
-  IsBoolean,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateTodoDto {
   @IsNotEmpty()
@@ -20,16 +14,12 @@ export class CreateTodoDto {
   readonly priority: number;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsString()
   readonly deadline: Date;
 
   @IsNotEmpty()
   @IsBoolean()
   readonly status: boolean;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly descritption: string;
 
   @IsNotEmpty()
   @IsString()
