@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config';
 import { TodosModule } from './todos/todos.module';
 import { CalendarModule } from './calendar/calendar.module';
+import { UsersModule } from './users/users.module';
 import appConfig from './config';
 
 @Module({
@@ -18,6 +19,7 @@ import appConfig from './config';
     }),
     TodosModule,
     CalendarModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
