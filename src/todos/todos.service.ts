@@ -6,14 +6,14 @@ import { Todo } from './models/todo.model';
 
 @Injectable()
 export class TodosService {
-  constructor(@InjectModel(Todo) private todoModel: typeof Todo) {}
+  constructor(@InjectModel(Todo) private todoRepository: typeof Todo) {}
 
   async getTodos() {
-    return await this.todoModel.findAll();
+    return await this.todoRepository.findAll();
   }
 
   async getOneTodo(id: string) {
-    return await this.todoModel.findOne({
+    return await this.todoRepository.findOne({
       where: {
         id,
       },
@@ -27,7 +27,7 @@ export class TodosService {
   }
 
   async deleteTodo(id: string) {
-    const todo = await this.todoModel.findOne({
+    const todo = await this.todoRepository.findOne({
       where: {
         id,
       },
@@ -37,7 +37,7 @@ export class TodosService {
   }
 
   async updateTodo(updateTodoDto: UpdateTodoDto, id: string) {
-    return await this.todoModel.update(
+    return await this.todoRepository.update(
       { ...updateTodoDto },
       {
         where: {
