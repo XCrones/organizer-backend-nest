@@ -9,3 +9,7 @@ export const databaseConfig = registerAs(EnumConfig.DATABASE, () => {
     },
   };
 });
+
+export default () => ({
+  port: process.env.SERVER_PORT,
+});
