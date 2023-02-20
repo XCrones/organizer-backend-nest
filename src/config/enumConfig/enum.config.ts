@@ -1,3 +1,3 @@
 export const EnumConfig = {
-  DATABASE: 'databse',
+  DATABASE: 'database',
 };
