@@ -6,14 +6,16 @@ import { Calendar } from './models/calendar.model';
 
 @Injectable()
 export class CalendarService {
-  constructor(@InjectModel(Calendar) private eventModel: typeof Calendar) {}
+  constructor(
+    @InjectModel(Calendar) private eventRepository: typeof Calendar,
+  ) {}
 
   async getEvents() {
-    return await this.eventModel.findAll();
+    return await this.eventRepository.findAll();
   }
 
   async getOneEvent(id: string) {
-    return await this.eventModel.findOne({
+    return await this.eventRepository.findOne({
       where: {
         id,
       },
@@ -27,7 +29,7 @@ export class CalendarService {
   }
 
   async deleteEvent(id: string) {
-    const event = await this.eventModel.findOne({
+    const event = await this.eventRepository.findOne({
       where: {
         id,
       },
@@ -37,7 +39,7 @@ export class CalendarService {
   }
 
   async updateEvent(updateEventDto: UpdateCalendarEventDto, id: string) {
-    return await this.eventModel.update(
+    return await this.eventRepository.update(
       { ...updateEventDto },
       {
         where: {
