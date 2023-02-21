@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsNotEmpty, IsString } from 'class-validator';
 
-export class AuthSignInResponse {
+export class AuthSignResponse {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()

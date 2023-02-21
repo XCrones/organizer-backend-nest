@@ -6,7 +6,7 @@ import { UsersService } from './../users/users.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { AuthSignInDTO } from './dto/auth-signin.dto';
 import * as bcrypt from 'bcrypt';
-import { AuthSignInResponse } from './response/sign-in.response';
+import { AuthSignResponse } from './response/sign-in.response';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
     return this.userService.createUser(dto);
   }
 
-  async signInUser(dto: AuthSignInDTO): Promise<AuthSignInResponse> {
+  async signInUser(dto: AuthSignInDTO): Promise<AuthSignResponse> {
     const findUser = await this.userService.findUserByEmail(dto.email);
     if (!findUser) {
       throw new BadRequestException(APP_ERRORS.AUTH_INCORRECT);
@@ -43,6 +43,14 @@ export class AuthService {
     const token = await this.tokenService.JWTTokenGenerate(userData);
     const publicUser = await this.userService.publicUser(dto.email);
 
-    return { ...publicUser, token } as AuthSignInResponse;
+    const user: AuthSignResponse = {
+      id: publicUser.id,
+      email: publicUser.email,
+      name: publicUser.name,
+      urlAvatar: publicUser.urlAvatar,
+      token: token,
+    };
+
+    return user;
   }
 }
