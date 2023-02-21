@@ -6,6 +6,9 @@ export class User extends Model {
   email: string;
 
   @Column
+  name: string;
+
+  @Column
   password: string;
 
   @Column

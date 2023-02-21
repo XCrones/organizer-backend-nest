@@ -7,9 +7,12 @@ export class UpdateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  password: string;
+  name: string;
 
   @IsNotEmpty()
+  @IsString()
+  password: string;
+
   @IsString()
   urlAvatar: string;
 }
