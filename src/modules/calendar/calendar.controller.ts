@@ -30,7 +30,7 @@ export class CalendarController {
   }
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @ApiResponse({ status: HttpStatus.OK, type: CalendarResponse })
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @Get(':id')
@@ -39,7 +39,7 @@ export class CalendarController {
   }
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @ApiResponse({ status: HttpStatus.OK, type: CalendarResponse })
   @HttpCode(HttpStatus.CREATED)
   @Header('Content-type', 'application/json')
   @Post()
@@ -50,7 +50,7 @@ export class CalendarController {
   }
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @ApiResponse({ status: HttpStatus.OK, type: CalendarResponse })
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @Patch(':id')
@@ -62,7 +62,7 @@ export class CalendarController {
   }
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @ApiResponse({ status: HttpStatus.OK, type: CalendarResponse })
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @Delete(':id')
