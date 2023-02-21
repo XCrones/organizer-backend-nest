@@ -10,41 +10,63 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { UpdateCalendarEventDto } from './dto/update-event.dto';
-import { CreateCalendarEventDto } from './dto/create-event.dto';
+import { UpdateEventDTO } from './dto/update-event.dto';
+import { CreateEventDTO } from './dto/create-event.dto';
 import { CalendarService } from './calendar.service';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CalendarResponse } from './response/calendar.response';
 
 @Controller('calendar')
 export class CalendarController {
   constructor(private readonly calendarService: CalendarService) {}
 
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @Header('Content-type', 'application/json')
+  @HttpCode(HttpStatus.OK)
   @Get()
-  getEvents() {
+  getEvents(): Promise<CalendarResponse[]> {
     return this.calendarService.getEvents();
   }
 
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @Header('Content-type', 'application/json')
+  @HttpCode(HttpStatus.OK)
   @Get(':id')
-  getOneEvent(@Param('id') id: string) {
+  getOneEvent(@Param('id') id: string): Promise<CalendarResponse> {
     return this.calendarService.getOneEvent(id);
   }
 
-  @Post()
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
   @HttpCode(HttpStatus.CREATED)
   @Header('Content-type', 'application/json')
-  createEvent(@Body() createEventDto: CreateCalendarEventDto) {
+  @Post()
+  createEvent(
+    @Body() createEventDto: CreateEventDTO,
+  ): Promise<CalendarResponse> {
     return this.calendarService.createEvent(createEventDto);
   }
 
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @Header('Content-type', 'application/json')
+  @HttpCode(HttpStatus.OK)
   @Patch(':id')
   updateEvent(
-    @Body() updateEventDto: UpdateCalendarEventDto,
+    @Body() updateEventDto: UpdateEventDTO,
     @Param('id') id: string,
-  ) {
+  ): Promise<CalendarResponse> {
     return this.calendarService.updateEvent(updateEventDto, id);
   }
 
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: Array<CalendarResponse> })
+  @Header('Content-type', 'application/json')
+  @HttpCode(HttpStatus.OK)
   @Delete(':id')
-  deleteEvent(@Param('id') id: string) {
+  deleteEvent(@Param('id') id: string): Promise<CalendarResponse> {
     return this.calendarService.deleteEvent(id);
   }
 }
