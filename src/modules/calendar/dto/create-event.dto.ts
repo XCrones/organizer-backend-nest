@@ -1,16 +1,16 @@
-import { IsNotEmpty, IsNumber, IsDate, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsDate } from 'class-validator';
 
-export class UpdateCalendarEventDto {
+export class CreateCalendarEventDto {
   @IsNotEmpty()
   @IsNumber()
   readonly uid: number;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsString()
   eventStart: Date;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsString()
   eventEnd: Date;
 
   @IsNotEmpty()

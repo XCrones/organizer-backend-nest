@@ -3,10 +3,10 @@ import { SequelizeModule } from '@nestjs/sequelize/dist';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config';
-import { TodosModule } from './todos/todos.module';
-import { CalendarModule } from './calendar/calendar.module';
-import { UsersModule } from './users/users.module';
 import appConfig from './config';
+import { TodosModule } from './modules/todos/todos.module';
+import { CalendarModule } from './modules/calendar/calendar.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [

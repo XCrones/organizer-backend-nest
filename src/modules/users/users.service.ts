@@ -11,11 +11,14 @@ export class UsersService {
 
   private hashPassword = (password: string) => bcrypt.hash(password, 10);
 
+  private findUserByEmail = (email: string) =>
+    this.userRepository.findOne({ where: { email } });
+
   async createUser(dto: CreateUserDto) {
     dto.password = await this.hashPassword(dto.password);
-    const todo = new User();
-    Object.assign(todo, dto);
-    return await todo.save();
+    const user = new User();
+    Object.assign(user, dto);
+    return await user.save();
   }
 
   async updateUser(dto: UpdateUserDto, id: number) {

@@ -5,8 +5,8 @@ import {
   SequelizeOptionsFactory,
 } from '@nestjs/sequelize';
 import { EnumConfig } from './enumConfig/enum.config';
-import { Todo } from 'src/todos/models/todo.model';
-import { Calendar } from 'src/calendar/models/calendar.model';
+import { Todo } from 'src/modules/todos/models/todo.model';
+import { Calendar } from 'src/modules/calendar/models/calendar.model';
 
 @Injectable()
 export class SequalizeConfigService implements SequelizeOptionsFactory {
