@@ -1,6 +1,7 @@
+import { JwtAuthGuard } from './../../guards/jwt.guard';
 import { CreateUserDTO } from './../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { AuthSignInDTO } from './dto/auth-signin.dto';
 import { AuthSignInResponse } from './response/sign-in.response';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
