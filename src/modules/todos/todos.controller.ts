@@ -22,6 +22,7 @@ export class TodosController {
 
   @ApiTags('API')
   @ApiResponse({ status: HttpStatus.OK, type: Array<TodoResponse> })
+  @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @Get()
   getTodos(): Promise<TodoResponse[]> {
@@ -30,25 +31,27 @@ export class TodosController {
 
   @ApiTags('API')
   @ApiResponse({ status: HttpStatus.OK, type: TodoResponse })
-  @Get(':id')
+  @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
+  @Get(':id')
   getOneTodo(@Param('id') id: string): Promise<TodoResponse> {
     return this.todosService.getOneTodo(id);
   }
 
   @ApiTags('API')
   @ApiResponse({ status: HttpStatus.CREATED, type: TodoResponse })
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
   @Header('Content-type', 'application/json')
+  @HttpCode(HttpStatus.CREATED)
+  @Post()
   createTodo(@Body() createTodoDto: CreateTodoDTO): Promise<TodoResponse> {
     return this.todosService.createTodo(createTodoDto);
   }
 
   @ApiTags('API')
   @ApiResponse({ status: HttpStatus.OK, type: TodoResponse })
-  @Patch(':id')
+  @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
+  @Patch(':id')
   updateTodo(
     @Body() updateTodoDto: UpdateTodoDTO,
     @Param('id') id: string,
@@ -58,8 +61,9 @@ export class TodosController {
 
   @ApiTags('API')
   @ApiResponse({ status: HttpStatus.OK, type: TodoResponse })
-  @Delete(':id')
+  @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
+  @Delete(':id')
   deleteTodo(@Param('id') id: string): Promise<TodoResponse> {
     return this.todosService.deleteTodo(id);
   }
