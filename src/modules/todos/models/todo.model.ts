@@ -21,8 +21,5 @@ export class Todo extends Model {
   status: boolean;
 
   @Column
-  descritption: string;
-
-  @Column
-  readonly background: string;
+  background: string;
 }
