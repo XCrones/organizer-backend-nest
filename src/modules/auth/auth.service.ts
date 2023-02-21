@@ -1,3 +1,4 @@
+import { UserDTO } from './dto/user.dto';
 import { TokenService } from './../token/token.service';
 import { APP_ERRORS } from './../../common/errors';
 import { CreateUserDTO } from './../users/dto/create-user.dto';
@@ -33,7 +34,8 @@ export class AuthService {
       throw new BadRequestException(APP_ERRORS.AUTH_INCORRECT);
     }
 
-    const userData = {
+    const userData: UserDTO = {
+      id: findUser.id,
       email: findUser.email,
       name: findUser.name,
     };
