@@ -33,13 +33,14 @@ export class AuthService {
       throw new BadRequestException(APP_ERRORS.AUTH_INCORRECT);
     }
 
-    const user = new AuthSignInResponse();
-    user.email = findUser.email;
-    user.name = findUser.name;
-    user.urlAvatar = findUser.urlAvatar;
-    user.id = findUser.id;
-    user.token = await this.tokenService.JWTTokenGenerate(findUser.email);
+    const userData = {
+      email: findUser.email,
+      name: findUser.name,
+    };
 
-    return user;
+    const token = await this.tokenService.JWTTokenGenerate(userData);
+    const publicUser = await this.userService.publicUser(dto.email);
+
+    return { ...publicUser, token } as AuthSignInResponse;
   }
 }
