@@ -1,7 +1,7 @@
 import { CreateUserDto } from './../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { AuthSignInDto } from './dto/auth-signin.dto';
+import { AuthSignInDTO } from './dto/auth-signin.dto';
 import { AuthSignInResponse } from './response/sign-in.response';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpStatus } from '@nestjs/common';
@@ -22,7 +22,7 @@ export class AuthController {
   @ApiResponse({ status: HttpStatus.OK, type: AuthSignInResponse })
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  signUp(@Body() dto: AuthSignInDto): Promise<AuthSignInResponse> {
+  signUp(@Body() dto: AuthSignInDTO): Promise<AuthSignInResponse> {
     return this.authService.signInUser(dto);
   }
 }

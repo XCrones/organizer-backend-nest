@@ -3,7 +3,7 @@ import { APP_ERRORS } from './../../common/errors';
 import { CreateUserDto } from './../users/dto/create-user.dto';
 import { UsersService } from './../users/users.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { AuthSignInDto } from './dto/auth-signin.dto';
+import { AuthSignInDTO } from './dto/auth-signin.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthSignInResponse } from './response/sign-in.response';
 
@@ -22,7 +22,7 @@ export class AuthService {
     return this.userService.createUser(dto);
   }
 
-  async signInUser(dto: AuthSignInDto): Promise<AuthSignInResponse> {
+  async signInUser(dto: AuthSignInDTO): Promise<AuthSignInResponse> {
     const findUser = await this.userService.findUserByEmail(dto.email);
     if (!findUser) {
       throw new BadRequestException(APP_ERRORS.AUTH_INCORRECT);
