@@ -13,11 +13,6 @@ export class UpdateUserDTO {
   name: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  password: string;
-
-  @ApiProperty()
   @IsString()
   urlAvatar: string;
 }
