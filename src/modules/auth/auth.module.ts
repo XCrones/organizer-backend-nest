@@ -1,3 +1,4 @@
+import { JWTStrategy } from '../../strategy/jwt.strategy';
 import { TokenModule } from './../token/token.module';
 import { UsersModule } from './../users/users.module';
 import { Module } from '@nestjs/common';
@@ -7,6 +8,6 @@ import { AuthService } from './auth.service';
 @Module({
   imports: [UsersModule, TokenModule],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JWTStrategy],
 })
 export class AuthModule {}
