@@ -5,7 +5,7 @@ export class UpdateEventDTO {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  readonly uid: number;
+  readonly id: number;
 
   @ApiProperty()
   @IsNotEmpty()
