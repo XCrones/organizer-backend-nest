@@ -1,7 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class UpdateTodoDTO {
+export class TodoResponse {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  readonly uid: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  readonly id: number;
+
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -31,4 +41,14 @@ export class UpdateTodoDTO {
   @IsNotEmpty()
   @IsString()
   readonly background: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly createdAt: Date;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly updatedAt: Date;
 }

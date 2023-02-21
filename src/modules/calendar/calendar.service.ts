@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCalendarEventDto } from './dto/create-event.dto';
-import { UpdateCalendarEventDto } from './dto/update-event.dto';
+import { CreateEventDTO } from './dto/create-event.dto';
+import { UpdateEventDTO } from './dto/update-event.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Calendar } from './models/calendar.model';
+import { CalendarResponse } from './response/calendar.response';
 
 @Injectable()
 export class CalendarService {
@@ -10,37 +11,40 @@ export class CalendarService {
     @InjectModel(Calendar) private eventRepository: typeof Calendar,
   ) {}
 
-  async getEvents() {
-    return await this.eventRepository.findAll();
+  async getEvents(): Promise<CalendarResponse[]> {
+    return (await this.eventRepository.findAll()) as CalendarResponse[];
   }
 
-  async getOneEvent(id: string) {
-    return await this.eventRepository.findOne({
+  async getOneEvent(id: string): Promise<CalendarResponse> {
+    return (await this.eventRepository.findOne({
       where: {
         id,
       },
-    });
+    })) as CalendarResponse;
   }
 
-  async createEvent(createEventDto: CreateCalendarEventDto) {
+  async createEvent(dto: CreateEventDTO): Promise<CalendarResponse> {
     const event = new Calendar();
-    Object.assign(event, createEventDto);
-    return await event.save();
+    Object.assign(event, dto);
+    return (await event.save()) as CalendarResponse;
   }
 
-  async deleteEvent(id: string) {
+  async deleteEvent(id: string): Promise<CalendarResponse> {
     const event = await this.eventRepository.findOne({
       where: {
         id,
       },
     });
     await event.destroy();
-    return event;
+    return event as CalendarResponse;
   }
 
-  async updateEvent(updateEventDto: UpdateCalendarEventDto, id: string) {
-    return await this.eventRepository.update(
-      { ...updateEventDto },
+  async updateEvent(
+    dto: UpdateEventDTO,
+    id: string,
+  ): Promise<CalendarResponse> {
+    const result = await this.eventRepository.update(
+      { ...dto },
       {
         where: {
           id,
@@ -48,5 +52,8 @@ export class CalendarService {
         returning: true,
       },
     );
+    const [count, item] = result;
+    const payload = item[0] as CalendarResponse;
+    return payload;
   }
 }

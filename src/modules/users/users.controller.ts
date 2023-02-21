@@ -1,43 +1,42 @@
+import { JwtAuthGuard } from './../../guards/jwt.guard';
 import {
   Body,
   Controller,
-  Get,
-  Header,
+  Delete,
   HttpCode,
   HttpStatus,
-  Param,
   Patch,
-  Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
-  getTodos() {
-    // return this.todosService.getTodos();
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: UpdateUserDTO })
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @Patch()
+  updateUser(
+    @Body() dto: UpdateUserDTO,
+    @Req() request,
+  ): Promise<UpdateUserDTO> {
+    const user = request.user;
+    return this.usersService.updateUser(user.email, dto);
   }
 
-  @Get(':id')
-  getOneTodo(@Param('id') id: string) {
-    // return this.todosService.getOneTodo(id);
-  }
-
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  @Header('Content-type', 'application/json')
-  createTodo(@Body() dto: CreateUserDto) {
-    // return this.todosService.createTodo(createTodoDto);
-    return this.usersService.createUser(dto);
-  }
-
-  @Patch(':id')
-  updateTodo(@Body() dto: UpdateUserDto, @Param('id') id: number) {
-    // return this.todosService.updateTodo(updateTodoDto, id);
-    return this.usersService.updateUser(dto, id);
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: Boolean })
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @Delete()
+  deleteUser(@Req() request): Promise<boolean> {
+    const user = request.user;
+    return this.usersService.deleteUser(user.email);
   }
 }

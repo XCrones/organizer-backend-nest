@@ -1,11 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class UpdateEventDTO {
+export class CalendarResponse {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   readonly uid: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  readonly id: number;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -30,4 +35,14 @@ export class UpdateEventDTO {
   @IsNotEmpty()
   @IsString()
   readonly background: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly createdAt: Date;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly updatedAt: Date;
 }
