@@ -12,4 +12,6 @@ export const databaseConfig = registerAs(EnumConfig.DATABASE, () => {
 
 export default () => ({
   port: process.env.SERVER_PORT,
+  jwt_secret: process.env.JWT_SECRET,
+  jwt_expire: process.env.JWT_EXPIRE,
 });
