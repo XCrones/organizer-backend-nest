@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateEventDTO {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  readonly uid: number;
-
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
