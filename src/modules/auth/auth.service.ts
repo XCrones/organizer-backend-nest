@@ -1,6 +1,6 @@
 import { TokenService } from './../token/token.service';
 import { APP_ERRORS } from './../../common/errors';
-import { CreateUserDto } from './../users/dto/create-user.dto';
+import { CreateUserDTO } from './../users/dto/create-user.dto';
 import { UsersService } from './../users/users.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { AuthSignInDTO } from './dto/auth-signin.dto';
@@ -14,7 +14,7 @@ export class AuthService {
     private readonly tokenService: TokenService,
   ) {}
 
-  async signUpUser(dto: CreateUserDto): Promise<CreateUserDto> {
+  async signUpUser(dto: CreateUserDTO): Promise<CreateUserDTO> {
     const findUser = await this.userService.findUserByEmail(dto.email);
     if (findUser) {
       throw new BadRequestException(APP_ERRORS.EMAIL_BUSY);

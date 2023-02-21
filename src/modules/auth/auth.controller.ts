@@ -1,4 +1,4 @@
-import { CreateUserDto } from './../users/dto/create-user.dto';
+import { CreateUserDTO } from './../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthSignInDTO } from './dto/auth-signin.dto';
@@ -11,10 +11,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.CREATED, type: CreateUserDto })
+  @ApiResponse({ status: HttpStatus.CREATED, type: CreateUserDTO })
   @HttpCode(HttpStatus.CREATED)
   @Post('signup')
-  signIn(@Body() dto: CreateUserDto): Promise<CreateUserDto> {
+  signIn(@Body() dto: CreateUserDTO): Promise<CreateUserDTO> {
     return this.authService.signUpUser(dto);
   }
 
