@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserDTO } from '../auth/dto/user.dto';
 
 @Injectable()
 export class TokenService {
@@ -9,9 +10,9 @@ export class TokenService {
     private readonly configService: ConfigService,
   ) {}
 
-  async JWTTokenGenerate(user) {
+  async JWTTokenGenerate(user: UserDTO) {
     const payload = { user };
-    return await this.jwtService.sign(payload, {
+    return this.jwtService.sign(payload, {
       secret: this.configService.get('jwt_secret'),
       expiresIn: this.configService.get('jwt_expire'),
     });
