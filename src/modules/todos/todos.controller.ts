@@ -53,12 +53,12 @@ export class TodosController {
   @HttpCode(HttpStatus.CREATED)
   @Post()
   createTodo(
-    @Body() createTodoDto: CreateTodoDTO,
+    @Body() dto: CreateTodoDTO,
     @Req() request,
   ): Promise<TodoResponse> {
     const user: UserDTO = request.user;
     console.log(user);
-    return this.todosService.createTodo(createTodoDto, user.id);
+    return this.todosService.createTodo(dto, user.id);
   }
 
   @ApiTags('API')
@@ -68,11 +68,11 @@ export class TodosController {
   @HttpCode(HttpStatus.OK)
   @Patch()
   updateTodo(
-    @Body() updateTodoDto: UpdateTodoDTO,
+    @Body() dto: UpdateTodoDTO,
     @Req() request,
   ): Promise<TodoResponse> {
     const user: UserDTO = request.user;
-    return this.todosService.updateTodo(updateTodoDto, user.id);
+    return this.todosService.updateTodo(dto, user.id);
   }
 
   @ApiTags('API')
