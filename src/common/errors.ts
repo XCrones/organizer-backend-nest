@@ -4,4 +4,5 @@ export const APP_ERRORS = {
   TODO_NOT_FOUND: 'Todo not found',
   EVENT_NOT_FOUND: 'Even not found',
   CITY_NOT_FOUND: 'City not found',
+  CITY_UPDATE_ERROR: 'City update error',
 };
