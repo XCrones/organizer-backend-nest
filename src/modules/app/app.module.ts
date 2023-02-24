@@ -1,3 +1,4 @@
+import { WeatherModule } from './../weather/weather.module';
 import { TokenModule } from '../token/token.module';
 import { AuthModule } from '../auth/auth.module';
 import { SequalizeConfigService } from '../../config/sequalizeConfig.service';
@@ -25,6 +26,7 @@ import { UsersModule } from '../users/users.module';
     UsersModule,
     AuthModule,
     TokenModule,
+    WeatherModule,
   ],
   controllers: [],
   providers: [],
