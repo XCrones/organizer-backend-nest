@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { ResponseDate } from 'src/common/response-date';
 
-export class CalendarResponse {
+export class CalendarResponse extends ResponseDate {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
@@ -35,14 +36,4 @@ export class CalendarResponse {
   @IsNotEmpty()
   @IsString()
   readonly background: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly createdAt: Date;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly updatedAt: Date;
 }

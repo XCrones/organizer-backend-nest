@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { ResponseDate } from 'src/common/response-date';
 
-export class TodoResponse {
+export class TodoResponse extends ResponseDate {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
@@ -41,14 +42,4 @@ export class TodoResponse {
   @IsNotEmpty()
   @IsString()
   readonly background: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly createdAt: Date;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly updatedAt: Date;
 }
