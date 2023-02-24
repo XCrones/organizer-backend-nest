@@ -5,6 +5,11 @@ import { ResponseDate } from 'src/common/response-date';
 export class WeatherResponse extends ResponseDate {
   @ApiProperty()
   @IsNotEmpty()
+  @IsNumber()
+  id: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
   @IsJSON()
   coord: {
     lon: number;
