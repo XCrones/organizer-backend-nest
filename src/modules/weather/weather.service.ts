@@ -7,12 +7,14 @@ import { APP_ERRORS } from 'src/common/errors';
 import { WeatherBaseDTO } from './dto/weather.base.dto';
 import { OpenWeatherService } from 'src/open-weather/open-weather.service';
 import { WeatherApiDTO } from 'src/open-weather/dto/weather-api.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class WeatherService {
   constructor(
     @InjectModel(Weather) private weatherRepository: typeof Weather,
     private readonly openWeatherService: OpenWeatherService,
+    private readonly configService: ConfigService,
   ) {}
 
   convertToCityID(dto: WeatherApiDTO): WeatherBaseDTO {
@@ -91,8 +93,10 @@ export class WeatherService {
 
     if (city) {
       const timeout = new Date(
-        new Date(Date.parse(String(city.updatedAt))).valueOf() + 1800000, // 30min
+        new Date(Date.parse(String(city.updatedAt))).valueOf() +
+          this.configService.get('weather_update_timeout'),
       );
+
       const dateNow = new Date();
 
       if (timeout > dateNow) {
