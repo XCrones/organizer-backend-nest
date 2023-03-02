@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString, IsJSON, IsEmpty } from 'class-validator';
 
-export class WeatherDTO {
+export class WeatherCurrentDTO {
   @ApiProperty()
   @IsJSON()
   coord: {
