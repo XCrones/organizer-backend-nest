@@ -5,4 +5,5 @@ export const APP_ERRORS = {
   EVENT_NOT_FOUND: 'Even not found',
   CITY_NOT_FOUND: 'City not found',
   CITY_UPDATE_ERROR: 'City update error',
+  CITY_EMPTY_NAME: 'City empty name',
 };
