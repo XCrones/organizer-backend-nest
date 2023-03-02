@@ -1,7 +1,7 @@
 import { Column, Model, Table, DataType } from 'sequelize-typescript';
 
 @Table
-export class Weather extends Model {
+export class WeatherCurrent extends Model {
   @Column(DataType.JSONB)
   coord: {
     lon: number;
