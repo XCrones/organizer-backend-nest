@@ -4,7 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
 import { APP_ERRORS } from 'src/common/errors';
 import { catchError, firstValueFrom } from 'rxjs';
-import { WeatherApiDTO } from './dto/weather-api.dto';
+import { WeatherCurrentApiDTO } from './dto/weather-current-api.dto';
+import { WeatherForecastDTO } from './dto/weather-forecast.dto';
 
 @Injectable()
 export class OpenWeatherService {
@@ -13,12 +14,33 @@ export class OpenWeatherService {
     private readonly httpService: HttpService,
   ) {}
 
-  async fetchCity(name: string): Promise<WeatherApiDTO> {
+  async fetchCurrent(name: string): Promise<WeatherCurrentApiDTO> {
     const urlApi = this.configService.get('weather_url_api');
     const token = this.configService.get('weather_token');
     const { data } = await firstValueFrom(
       this.httpService
-        .get<WeatherApiDTO>(`${urlApi}?q=${name}&units=metric&appid=${token}`)
+        .get<WeatherCurrentApiDTO>(
+          `${urlApi}/weather?q=${name}&units=metric&appid=${token}`,
+        )
+        .pipe(
+          catchError((error: AxiosError) => {
+            //! throw error;
+            throw new BadRequestException(APP_ERRORS.CITY_NOT_FOUND);
+          }),
+        ),
+    );
+
+    return data;
+  }
+
+  async fetchForecast(name: string): Promise<WeatherForecastDTO> {
+    const urlApi = this.configService.get('weather_url_api');
+    const token = this.configService.get('weather_token');
+    const { data } = await firstValueFrom(
+      this.httpService
+        .get<WeatherForecastDTO>(
+          `${urlApi}/forecast?q=${name}&units=metric&appid=${token}`,
+        )
         .pipe(
           catchError((error: AxiosError) => {
             //! throw error;
