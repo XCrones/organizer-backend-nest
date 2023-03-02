@@ -17,6 +17,6 @@ export default () => ({
   weather_token: process.env.WEATHER_TOKEN,
   weather_url_api: process.env.WEATHER_URL_API,
   weather_url_icon: process.env.WEATHER_URL_ICON,
-  weather_url_icon_postfix: process.env.WEATHER_URL_ICON_POSTFIX,
+  weather_icon_postfix: process.env.WEATHER_ICON_POSTFIX,
   weather_update_timeout: process.env.WEATHER_UPDATE_TIMEOUT,
 });
