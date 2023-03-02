@@ -56,14 +56,12 @@ export class WeatherForecastService {
     })) as ForecastResponse;
   }
 
-  async searchCityByID(cityID: number): Promise<ForecastResponse | null> {
+  async searchCityByID(id: number): Promise<ForecastResponse | null> {
     return (await this.repository.findOne({
       where: {
-        where: {
-          city: {
-            [Op.contains]: {
-              id: cityID,
-            },
+        city: {
+          [Op.contains]: {
+            id,
           },
         },
       },
@@ -134,12 +132,10 @@ export class WeatherForecastService {
       }
     }
 
-    const response = await this.openWeatherService.fetchForecast(
-      nameCapitalize,
-    );
+    const resForecast: WeatherForecastDTO =
+      await this.openWeatherService.fetchWeather(nameCapitalize, 'forecast');
 
-    const responseMakingIcon = await this.convertToBaseDTO(response);
-
-    return await this.saveForecast(responseMakingIcon);
+    const forecastConverted = await this.convertToBaseDTO(resForecast);
+    return await this.saveForecast(forecastConverted);
   }
 }
