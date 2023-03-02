@@ -5,20 +5,31 @@ import { GetCityDTO } from './dto/get-city.dto';
 import { WeatherResponse } from './response/response';
 import { APP_ERRORS } from 'src/common/errors';
 import { WeatherBaseDTO } from './dto/weather.base.dto';
-import { OpenWeatherService } from 'src/open-weather/open-weather.service';
-import { WeatherApiDTO } from 'src/open-weather/dto/weather-api.dto';
+import { ConfigService } from '@nestjs/config';
+import { OpenWeatherService } from '../open-weather/open-weather.service';
+import { WeatherApiDTO } from '../open-weather/dto/weather-api.dto';
 
 @Injectable()
 export class WeatherService {
   constructor(
     @InjectModel(Weather) private weatherRepository: typeof Weather,
     private readonly openWeatherService: OpenWeatherService,
+    private readonly configService: ConfigService,
   ) {}
 
-  convertToCityID(dto: WeatherApiDTO): WeatherBaseDTO {
+  convertToBaseDTO(dto: WeatherApiDTO): WeatherBaseDTO {
     const { id: cityID, ...metaDate } = dto;
     const weatherBase = new WeatherBaseDTO();
     Object.assign(weatherBase, { cityID, ...metaDate });
+
+    if (weatherBase.weather[0]) {
+      const iconBaseUrl = this.configService.get('weather_url_icon');
+      const iconPostfix = this.configService.get('weather_icon_postfix');
+      const iconUrl = `${iconBaseUrl}/${weatherBase.weather[0].icon}${iconPostfix}`;
+
+      weatherBase.weather[0].icon = iconUrl;
+    }
+
     return weatherBase;
   }
 
@@ -90,21 +101,26 @@ export class WeatherService {
     const city = await this.searchCityByName(nameCapitalize);
 
     if (city) {
-      const timeout = new Date(
-        new Date(Date.parse(String(city.updatedAt))).valueOf() + 1800000, // 30min
+      const timeout = Math.max(
+        1800000,
+        +this.configService.get('weather_update_timeout'),
       );
+      const DateTimeout = new Date(
+        new Date(Date.parse(String(city.updatedAt))).valueOf() + timeout,
+      );
+
       const dateNow = new Date();
 
-      if (timeout > dateNow) {
+      if (DateTimeout > dateNow) {
         console.log(
-          `NO NEED TO UPDATE ${nameCapitalize}! NEXT UPDATE AFTER: ${timeout}`,
+          `NO NEED TO UPDATE ${nameCapitalize}! NEXT UPDATE AFTER: ${DateTimeout}`,
         );
         return city;
       }
     }
 
     const response = await this.openWeatherService.fetchCity(nameCapitalize);
-    const weather = this.convertToCityID(response);
+    const weather = this.convertToBaseDTO(response);
     return await this.saveCity(weather);
   }
 }
