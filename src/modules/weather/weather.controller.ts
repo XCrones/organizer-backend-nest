@@ -22,7 +22,7 @@ export class WeatherController {
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @Get()
-  testPost(@Body() dto: GetCityDTO) {
+  getWeather(@Body() dto: GetCityDTO) {
     return this.weatherService.getCity(dto);
   }
 }
