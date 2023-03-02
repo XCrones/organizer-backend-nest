@@ -4,24 +4,22 @@ import { Weather } from './models/weather.model';
 import { GetCityDTO } from './dto/get-city.dto';
 import { WeatherResponse } from './response/response';
 import { APP_ERRORS } from 'src/common/errors';
-import { HttpService } from '@nestjs/axios';
-import { catchError, firstValueFrom } from 'rxjs';
-import { AxiosError } from 'axios';
-import { ConfigService } from '@nestjs/config';
-import { WeatherApiDTO } from './dto/weather.api.dto';
 import { WeatherBaseDTO } from './dto/weather.base.dto';
+import { OpenWeatherService } from 'src/open-weather/open-weather.service';
+import { WeatherApiDTO } from 'src/open-weather/dto/weather-api.dto';
 
 @Injectable()
 export class WeatherService {
   constructor(
     @InjectModel(Weather) private weatherRepository: typeof Weather,
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
+    private readonly openWeatherService: OpenWeatherService,
   ) {}
 
   convertToCityID(dto: WeatherApiDTO): WeatherBaseDTO {
     const { id: cityID, ...metaDate } = dto;
-    return { cityID, ...metaDate } as WeatherBaseDTO;
+    const weatherBase = new WeatherBaseDTO();
+    Object.assign(weatherBase, { cityID, ...metaDate });
+    return weatherBase;
   }
 
   async searchCityByName(name: string): Promise<WeatherResponse | null> {
@@ -74,33 +72,14 @@ export class WeatherService {
     const city = await this.searchCity(dto);
 
     if (city) {
+      console.log(`UPDATE ${city.name}! LAST UPDATE: ${city.updatedAt}`);
       return await this.updateCity(dto, city.id);
     }
 
+    console.log(`CREATE NEW: ${dto.name}! NEXT UPDATE AFTER: ${new Date()}`);
     const newCity = new Weather();
     Object.assign(newCity, dto);
     return (await newCity.save()) as WeatherResponse;
-  }
-
-  async fetchCity(name: string): Promise<WeatherResponse> {
-    const urlApi = this.configService.get('weather_url_api');
-    const token = this.configService.get('weather_token');
-    const { data } = await firstValueFrom(
-      this.httpService
-        .get<WeatherApiDTO>(`${urlApi}?q=${name}&units=metric&appid=${token}`)
-        .pipe(
-          catchError((error: AxiosError) => {
-            //! throw error;
-            throw new BadRequestException(APP_ERRORS.CITY_NOT_FOUND);
-          }),
-        ),
-    );
-
-    const cityConvert = this.convertToCityID(data);
-    const weather = new WeatherBaseDTO();
-    Object.assign(weather, cityConvert);
-
-    return await this.saveCity(weather);
   }
 
   async getCity(dto: GetCityDTO): Promise<WeatherResponse> {
@@ -112,7 +91,7 @@ export class WeatherService {
 
     if (city) {
       const timeout = new Date(
-        new Date(Date.parse(String(city.updatedAt))).valueOf() + 1800000,
+        new Date(Date.parse(String(city.updatedAt))).valueOf() + 1800000, // 30min
       );
       const dateNow = new Date();
 
@@ -124,6 +103,8 @@ export class WeatherService {
       }
     }
 
-    return await this.fetchCity(nameCapitalize);
+    const response = await this.openWeatherService.fetchCity(nameCapitalize);
+    const weather = this.convertToCityID(response);
+    return await this.saveCity(weather);
   }
 }
