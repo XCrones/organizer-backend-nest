@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 import { WeatherController } from './weather.controller';
-import { WeatherService } from './weather.service';
-import { Weather } from './models/weather.model';
+import { WeatherCurrentService } from './weather-current.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { OpenWeatherModule } from '../open-weather/open-weather.module';
+import { WeatherForecastService } from './weather-forecast.service';
+
+import { WeatherCurrent } from './models/weather-current.model';
+import { WeatherForecast } from './models/weather-forecast.model';
 
 @Module({
-  imports: [OpenWeatherModule, SequelizeModule.forFeature([Weather])],
+  imports: [
+    OpenWeatherModule,
+    SequelizeModule.forFeature([WeatherCurrent, WeatherForecast]),
+  ],
   controllers: [WeatherController],
-  providers: [WeatherService],
+  providers: [WeatherCurrentService, WeatherForecastService],
 })
 export class WeatherModule {}

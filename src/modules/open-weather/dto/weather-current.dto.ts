@@ -1,15 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString, IsJSON } from 'class-validator';
-import { ResponseDate } from 'src/common/response-date';
+import { IsNumber, IsString, IsJSON, IsEmpty } from 'class-validator';
 
-export class WeatherResponse extends ResponseDate {
+export class WeatherCurrentDTO {
   @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  id: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
   @IsJSON()
   coord: {
     lon: number;
@@ -17,7 +10,6 @@ export class WeatherResponse extends ResponseDate {
   };
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsJSON()
   weather: [
     {
@@ -29,31 +21,27 @@ export class WeatherResponse extends ResponseDate {
   ];
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
   base: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsJSON()
   main: {
     temp: number;
-    feels_like: number;
-    temp_min: number;
-    temp_max: number;
-    pressure: number;
     humidity: number;
+    pressure: number;
+    temp_max: number;
+    temp_min: number;
     sea_level: number;
+    feels_like: number;
     grnd_level: number;
   };
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsNumber()
   visibility: number;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsJSON()
   wind: {
     speed: number;
@@ -62,7 +50,6 @@ export class WeatherResponse extends ResponseDate {
   };
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsJSON()
   rain: {
     '1h': number;
@@ -70,7 +57,7 @@ export class WeatherResponse extends ResponseDate {
   };
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsEmpty()
   @IsJSON()
   snow: {
     '1h': number;
@@ -78,46 +65,35 @@ export class WeatherResponse extends ResponseDate {
   };
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsJSON()
   clouds: {
     all: number;
   };
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsNumber()
   dt: number;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsJSON()
   sys: {
-    type: number;
     id: number;
+    type: number;
+    sunset: number;
     country: string;
     sunrise: number;
-    sunset: number;
     message: string;
   };
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsNumber()
   timezone: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  cityID: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
   @IsString()
   name: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsNumber()
   cod: number;
 }

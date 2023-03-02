@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
-import { WeatherDTO } from './weather.dto';
+import { WeatherCurrentDTO } from './weather-current.dto';
 
-export class WeatherApiDTO extends WeatherDTO {
+export class WeatherCurrentApiDTO extends WeatherCurrentDTO {
   @ApiProperty()
   @IsNumber()
   id: number;
