@@ -121,8 +121,10 @@ export class WeatherCurrentService {
       }
     }
 
-    const response = await this.openWeatherService.fetchCurrent(nameCapitalize);
-    const weather = this.convertToBaseDTO(response);
-    return await this.saveCurrent(weather);
+    const resWeather: WeatherCurrentApiDTO =
+      await this.openWeatherService.fetchWeather(nameCapitalize, 'weather');
+
+    const weatherConverted = this.convertToBaseDTO(resWeather);
+    return await this.saveCurrent(weatherConverted);
   }
 }
