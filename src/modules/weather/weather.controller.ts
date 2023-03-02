@@ -28,7 +28,7 @@ export class WeatherController {
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @Get('current')
-  getCurrent(@Body() dto: GetWeatherDTO) {
+  getCurrent(@Body() dto: GetWeatherDTO): Promise<CurrentResponse> {
     return this.weatherCurrentService.getCurrent(dto);
   }
 
@@ -38,7 +38,7 @@ export class WeatherController {
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @Get('forecast')
-  getForecast(@Body() dto: GetWeatherDTO) {
+  getForecast(@Body() dto: GetWeatherDTO): Promise<ForecastResponse> {
     return this.weatherForecastService.getForecast(dto);
   }
 }
