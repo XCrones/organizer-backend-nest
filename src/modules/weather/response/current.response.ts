@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString, IsJSON } from 'class-validator';
 import { ResponseDate } from 'src/common/response-date';
 
-export class WeatherResponse extends ResponseDate {
+export class CurrentResponse extends ResponseDate {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
