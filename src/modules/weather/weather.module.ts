@@ -7,11 +7,12 @@ import { WeatherForecastService } from './weather-forecast.service';
 
 import { WeatherCurrent } from './models/weather-current.model';
 import { WeatherForecast } from './models/weather-forecast.model';
+import { WeatherUser } from './models/weather.user.model';
 
 @Module({
   imports: [
     OpenWeatherModule,
-    SequelizeModule.forFeature([WeatherCurrent, WeatherForecast]),
+    SequelizeModule.forFeature([WeatherCurrent, WeatherForecast, WeatherUser]),
   ],
   controllers: [WeatherController],
   providers: [WeatherCurrentService, WeatherForecastService],
