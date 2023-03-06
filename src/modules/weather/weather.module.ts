@@ -8,6 +8,7 @@ import { WeatherForecastService } from './weather-forecast.service';
 import { WeatherCurrent } from './models/weather-current.model';
 import { WeatherForecast } from './models/weather-forecast.model';
 import { WeatherUser } from './models/weather.user.model';
+import { WeatherUserService } from './services/weather-user.service';
 
 @Module({
   imports: [
@@ -15,6 +16,10 @@ import { WeatherUser } from './models/weather.user.model';
     SequelizeModule.forFeature([WeatherCurrent, WeatherForecast, WeatherUser]),
   ],
   controllers: [WeatherController],
-  providers: [WeatherCurrentService, WeatherForecastService],
+  providers: [
+    WeatherCurrentService,
+    WeatherForecastService,
+    WeatherUserService,
+  ],
 })
 export class WeatherModule {}
