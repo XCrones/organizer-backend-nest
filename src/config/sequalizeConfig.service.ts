@@ -9,6 +9,7 @@ import { Todo } from 'src/modules/todos/models/todo.model';
 import { Calendar } from 'src/modules/calendar/models/calendar.model';
 import { WeatherForecast } from 'src/modules/weather/models/weather-forecast.model';
 import { WeatherCurrent } from '../modules/weather/models/weather-current.model';
+import { WeatherUser } from 'src/modules/weather/models/weather.user.model';
 
 @Injectable()
 export class SequalizeConfigService implements SequelizeOptionsFactory {
@@ -27,7 +28,7 @@ export class SequalizeConfigService implements SequelizeOptionsFactory {
       username,
       password,
       database,
-      models: [Todo, Calendar, WeatherCurrent, WeatherForecast],
+      models: [Todo, Calendar, WeatherCurrent, WeatherForecast, WeatherUser],
       autoLoadModels: true,
       synchronize: true,
     };
