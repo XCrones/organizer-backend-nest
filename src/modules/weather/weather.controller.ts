@@ -1,4 +1,3 @@
-import { WeatherCurrentService } from './weather-current.service';
 import {
   Body,
   Controller,
@@ -14,8 +13,7 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { GetWeatherDTO } from './dto/get-weather.dto';
-import { CurrentResponse } from './response/current.response';
-import { WeatherForecastService } from './weather-forecast.service';
+import { WeatherForecastService } from './services/weather-forecast.service';
 import { ForecastResponse } from './response/forecast.response';
 import { UserDTO } from '../auth/dto/user.dto';
 import { WeatherUserService } from './services/weather-user.service';
@@ -23,20 +21,9 @@ import { WeatherUserService } from './services/weather-user.service';
 @Controller('weather')
 export class WeatherController {
   constructor(
-    private readonly weatherCurrentService: WeatherCurrentService,
     private readonly weatherForecastService: WeatherForecastService,
     private readonly weatherUserService: WeatherUserService,
   ) {}
-
-  @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: CurrentResponse })
-  @UseGuards(JwtAuthGuard)
-  @Header('Content-type', 'application/json')
-  @HttpCode(HttpStatus.OK)
-  @Get('current')
-  getCurrent(@Body() dto: GetWeatherDTO): Promise<CurrentResponse> {
-    return this.weatherCurrentService.getCurrent(dto);
-  }
 
   @ApiTags('API')
   @ApiResponse({ status: HttpStatus.OK, type: ForecastResponse })
