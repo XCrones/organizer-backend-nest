@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsJSON } from 'class-validator';
 import { ResponseDate } from 'src/common/response-date';
 import { ICityWeather } from '../interfaces/city-weather.interface';
 
-export class CurrentResponse extends ResponseDate {
+export class CitiesResponse extends ResponseDate {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
@@ -16,5 +16,5 @@ export class CurrentResponse extends ResponseDate {
 
   @ApiProperty()
   @IsJSON()
-  citiesId: ICityWeather[];
+  weatherCities: ICityWeather[];
 }
