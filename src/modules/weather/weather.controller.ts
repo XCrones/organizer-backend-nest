@@ -17,6 +17,7 @@ import { WeatherForecastService } from './services/weather-forecast.service';
 import { ForecastResponse } from './response/forecast.response';
 import { UserDTO } from '../auth/dto/user.dto';
 import { WeatherUserService } from './services/weather-user.service';
+import { ICityWeather } from './interfaces/city-weather.interface';
 
 @Controller('weather')
 export class WeatherController {
@@ -30,7 +31,7 @@ export class WeatherController {
   @UseGuards(JwtAuthGuard)
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
-  @Get()
+  @Get('forecast')
   async getForecast(
     @Body() dto: GetWeatherDTO,
     @Req() request,
@@ -41,13 +42,24 @@ export class WeatherController {
   }
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: Array<number> })
+  @ApiResponse({ status: HttpStatus.OK, type: Array<ICityWeather> })
   @UseGuards(JwtAuthGuard)
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
-  @Delete(':cityId')
-  dropCity(@Param('cityId') cityId: number, @Req() request): Promise<number[]> {
+  @Delete(':id')
+  dropCity(@Param('id') id: number, @Req() request): Promise<ICityWeather[]> {
     const user: UserDTO = request.user;
-    return this.weatherUserService.dropCity(user.id, +cityId);
+    return this.weatherUserService.dropCity(user.id, +id);
+  }
+
+  @ApiTags('API')
+  @ApiResponse({ status: HttpStatus.OK, type: Array<ICityWeather> })
+  @UseGuards(JwtAuthGuard)
+  @Header('Content-type', 'application/json')
+  @HttpCode(HttpStatus.OK)
+  @Get('cities')
+  async getCities(@Req() request): Promise<ICityWeather[]> {
+    const user: UserDTO = request.user;
+    return this.weatherUserService.getCities(user.id);
   }
 }
