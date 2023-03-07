@@ -7,6 +7,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -31,7 +32,7 @@ export class WeatherController {
   @UseGuards(JwtAuthGuard)
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
-  @Get('forecast')
+  @Post('forecast')
   async getForecast(
     @Body() dto: GetWeatherDTO,
     @Req() request,
@@ -42,7 +43,7 @@ export class WeatherController {
   }
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: Array<ICityWeather> })
+  @ApiResponse({ status: HttpStatus.OK, type: Array<ICityWeather[]> })
   @UseGuards(JwtAuthGuard)
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
@@ -53,7 +54,7 @@ export class WeatherController {
   }
 
   @ApiTags('API')
-  @ApiResponse({ status: HttpStatus.OK, type: Array<ICityWeather> })
+  @ApiResponse({ status: HttpStatus.OK, type: Array<ICityWeather[]> })
   @UseGuards(JwtAuthGuard)
   @Header('Content-type', 'application/json')
   @HttpCode(HttpStatus.OK)
