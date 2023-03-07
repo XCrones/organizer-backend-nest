@@ -21,6 +21,7 @@ export class WeatherUserService {
     const newCity: ICityWeather = {
       id: forecast.id,
       name: forecast.city.name,
+      country: forecast.city.country,
     };
 
     if (user) {
@@ -71,6 +72,10 @@ export class WeatherUserService {
       where: { uid },
     });
 
-    return arrCities.weatherCities;
+    if (!!arrCities) {
+      return arrCities.weatherCities;
+    }
+
+    return [];
   }
 }
