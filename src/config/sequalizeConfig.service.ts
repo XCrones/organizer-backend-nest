@@ -1,3 +1,4 @@
+import { WeatherCurrent } from './../modules/weather/models/weather-current.model';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -27,7 +28,7 @@ export class SequalizeConfigService implements SequelizeOptionsFactory {
       username,
       password,
       database,
-      models: [Todo, Calendar, WeatherForecast, WeatherUser],
+      models: [Todo, Calendar, WeatherForecast, WeatherUser, WeatherCurrent],
       autoLoadModels: true,
       synchronize: true,
     };
