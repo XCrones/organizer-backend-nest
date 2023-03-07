@@ -1,4 +1,5 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { ICityWeather } from '../interfaces/city-weather.interface';
 
 @Table
 export class WeatherUser extends Model {
@@ -6,5 +7,5 @@ export class WeatherUser extends Model {
   uid: number;
 
   @Column(DataType.JSONB)
-  citiesId: number[];
+  weatherCities: ICityWeather[];
 }
