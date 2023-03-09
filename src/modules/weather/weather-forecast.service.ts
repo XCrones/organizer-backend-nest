@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { GetWeatherDTO } from './dto/get-weather.dto';
 import { APP_ERRORS } from 'src/common/errors';
 import { ConfigService } from '@nestjs/config';
 import { OpenWeatherService } from '../open-weather/open-weather.service';
@@ -8,6 +7,7 @@ import { WeatherForecastDTO } from '../open-weather/dto/weather-forecast.dto';
 import { ForecastResponse } from './response/forecast.response';
 import { WeatherForecast } from './models/weather-forecast.model';
 import { Op } from 'sequelize';
+import { WeatherByNameDTO } from '../open-weather/dto/weather-geo.dto';
 
 @Injectable()
 export class WeatherForecastService {
@@ -106,7 +106,7 @@ export class WeatherForecastService {
     return (await newCity.save()) as ForecastResponse;
   }
 
-  async getForecast(dto: GetWeatherDTO): Promise<ForecastResponse> {
+  async getForecast(dto: WeatherByNameDTO): Promise<ForecastResponse> {
     const nameLowerCase = dto.city.toLowerCase();
     const nameCapitalize =
       nameLowerCase.charAt(0).toUpperCase() + nameLowerCase.slice(1);
@@ -133,7 +133,10 @@ export class WeatherForecastService {
     }
 
     const resForecast: WeatherForecastDTO =
-      await this.openWeatherService.fetchWeather(nameCapitalize, 'forecast');
+      await this.openWeatherService.fetchWeatherByName(
+        nameCapitalize,
+        'forecast',
+      );
 
     const forecastConverted = await this.convertToBaseDTO(resForecast);
     return await this.saveForecast(forecastConverted);
