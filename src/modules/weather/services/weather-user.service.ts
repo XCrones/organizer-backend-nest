@@ -4,19 +4,29 @@ import { WeatherUser } from '../models/weather.user.model';
 import { ForecastResponse } from '../response/forecast.response';
 import { APP_ERRORS } from 'src/common/errors';
 import { ICityWeather } from '../interfaces/city-weather.interface';
+import { WeatherForecastService } from './weather-forecast.service';
+import {
+  WeatherByGeoDTO,
+  WeatherByNameDTO,
+} from 'src/modules/open-weather/dto/weather-geo.dto';
 
 @Injectable()
 export class WeatherUserService {
   constructor(
     @InjectModel(WeatherUser)
-    private readonly weatherUserRepository: typeof WeatherUser,
+    private readonly usersRepository: typeof WeatherUser,
+    private readonly weatherForecastService: WeatherForecastService,
   ) {}
 
-  async addCity(
-    uid: number,
+  private async searchUser(uid: number): Promise<WeatherUser> {
+    return await this.usersRepository.findOne({ where: { uid } });
+  }
+
+  private async addCity(
     forecast: ForecastResponse,
+    uid: number,
   ): Promise<ForecastResponse> {
-    const user = await this.weatherUserRepository.findOne({ where: { uid } });
+    const user = await this.searchUser(uid);
 
     const newCity: ICityWeather = {
       id: forecast.id,
@@ -42,8 +52,42 @@ export class WeatherUserService {
     return forecast;
   }
 
+  async addCityByName(
+    uid: number,
+    dto: WeatherByNameDTO,
+  ): Promise<ICityWeather[]> {
+    const forecast = await this.weatherForecastService.getForecastByName(dto);
+    await this.addCity(forecast, uid);
+    return (await this.searchUser(uid)).weatherCities;
+  }
+
+  async addCityByGeo(
+    uid: number,
+    dto: WeatherByGeoDTO,
+  ): Promise<ICityWeather[]> {
+    // throw new BadRequestException(APP_ERRORS.CITY_NOT_FOUND);
+    const forecast = await this.weatherForecastService.getForecastByGeo(dto);
+    await this.addCity(forecast, uid);
+    return (await this.searchUser(uid)).weatherCities;
+  }
+
+  async searchCity(id: number, uid: number): Promise<ForecastResponse> {
+    const user = await this.searchUser(uid);
+
+    if (user) {
+      const city = user.weatherCities.find((city) => city.id === id);
+
+      if (city) {
+        return await this.weatherForecastService.getForecastById(id);
+      }
+
+      throw new BadRequestException(APP_ERRORS.CITY_NOT_FOUND);
+    }
+    throw new BadRequestException(APP_ERRORS.USER_NOT_FOUND);
+  }
+
   async dropCity(uid: number, cityId: number): Promise<ICityWeather[]> {
-    const user = await this.weatherUserRepository.findOne({ where: { uid } });
+    const user = await this.searchUser(uid);
 
     if (user) {
       if (user.weatherCities.length > 0) {
@@ -68,12 +112,10 @@ export class WeatherUserService {
   }
 
   async getCities(uid: number): Promise<ICityWeather[]> {
-    const arrCities = await this.weatherUserRepository.findOne({
-      where: { uid },
-    });
+    const user = await this.searchUser(uid);
 
-    if (!!arrCities) {
-      return arrCities.weatherCities;
+    if (!!user) {
+      return user.weatherCities;
     }
 
     return [];
